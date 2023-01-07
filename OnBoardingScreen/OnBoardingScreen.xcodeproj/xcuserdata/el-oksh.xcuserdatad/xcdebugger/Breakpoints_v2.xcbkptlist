@@ -14,8 +14,8 @@
             filePath = "OnBoardingScreen/Controllers/OnBoardingViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "66"
-            endingLineNumber = "66"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
             landmarkName = "skipButtonAction(_:)"
             landmarkType = "7">
          </BreakpointContent>

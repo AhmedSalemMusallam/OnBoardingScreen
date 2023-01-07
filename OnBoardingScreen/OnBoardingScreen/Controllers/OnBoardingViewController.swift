@@ -36,11 +36,11 @@ class OnBoardingViewController: UIViewController {
     [
         ImageHelper.image_1,
         ImageHelper.image_2,
-        ImageHelper.image_3,
+        ImageHelper.image_3
     
     ]
-//    BoardingCollectionView.delegate = self
-//    BoardingCollectionView.dataSource = self
+    
+   
   
     
 
@@ -54,17 +54,29 @@ extension OnBoardingViewController {
         super.viewDidLoad()
 
         //Adding Some Custom Styles
+        loginButton.layer.cornerRadius = 12
         loginButton.layer.borderWidth = 1
         loginButton.layer.borderColor = DarkColor?.cgColor
-        
+        signUpButton.layer.cornerRadius = 12
+        signUpButton.layer.borderWidth = 1
+        //initail state for buttons
+        loginButton.isHidden = true
+        signUpButton.isHidden = true
         // Do any additional setup after loading the view.
+        BoardingCollectionView.delegate = self
+        BoardingCollectionView.dataSource = self
+        //initializt the page number
+        pageControl.page = 0
+
     }
 }
 
 // MARK: - IBActions
 extension OnBoardingViewController{
     @IBAction func skipButtonAction(_ sender: UIButton) {
-        print("Skip")
+//        print("Skip")
+        showItem(at: 2)
+        skipShow(true)
     }
     
      @IBAction func signUpButtonAction(_ sender: UIButton) {
@@ -97,16 +109,28 @@ extension OnBoardingViewController{
         let indexPath = IndexPath(item: index, section: 0)
         BoardingCollectionView.scrollToItem(at: indexPath, at: [.centeredHorizontally,.centeredVertically], animated: true)
     }
+    
+    private func normalize(value: CGFloat)-> CGFloat{
+        let scale = UIScreen.main.bounds.width / 375.0
+        return value * scale
+    }
 }
+
+
 
 // MARK: - UIViewController Delegation and DataSourcce
 extension OnBoardingViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        0
+        return titleArray.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "OnBoardingCell", for: indexPath) as? OnBoardingCell else { return UICollectionViewCell() }
+        cell.sleepImageWidthConstraint.constant = normalize(value: 260.0)
+        cell.SleepImageView.image = imageArray[indexPath.row]
+        cell.titleLabel.text = titleArray[indexPath.row]
+        cell.subTitleLabel.text = subTitleArray[indexPath.row]
+        return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: BoardingCollectionView.frame.width, height: BoardingCollectionView.frame.height)
@@ -127,11 +151,13 @@ extension UIPageControl {
         }
         set {
             currentPage = newValue
-            setIndicatorImage(ImageHelper.pageSelected, forPage: newValue)
+            
             
             for index in 0..<numberOfPages where index != newValue {
-                preferredIndicatorImage = ImageHelper.page
+                setIndicatorImage(ImageHelper.page, forPage: index)
             }
+            
+            setIndicatorImage(ImageHelper.pageSelected, forPage: newValue)
         }
     }
 }

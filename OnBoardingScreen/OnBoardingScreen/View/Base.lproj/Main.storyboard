@@ -118,6 +118,12 @@
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="350" height="565"/>
+                                        <connections>
+                                            <outlet property="SleepImageView" destination="26N-LI-O0J" id="UPx-9A-MCD"/>
+                                            <outlet property="sleepImageWidthConstraint" destination="xyf-WB-qmJ" id="wPO-ug-BBz"/>
+                                            <outlet property="subTitleLabel" destination="xMq-La-YBQ" id="hJq-w1-8TX"/>
+                                            <outlet property="titleLabel" destination="0Fe-tA-Gwc" id="4PW-Td-PUr"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
